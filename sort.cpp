@@ -58,6 +58,65 @@ double select_sort(int);
 const int K=5;
 int c[(1<<K)][1000005];
 
+double select2_sort(int s, int e) //Selection sort
+{
+    int i, j, time1, time2, time_t;
+    int p;
+    for(i=s;i<=e;i++){
+        p = i;
+        for(j=i+1;j<=e;j++){
+           if(a[j]<a[p])p = j;
+        }
+        if(i!=p)swap(a[i], a[p]);
+    }
+}
+
+int R[1000005];
+
+void quick_sort2(int s, int e)
+{
+    int l = s+1, r = e-1, p1 = s, p2 = e, i, sr = 0, er = 0, pr = -1, subpivot;
+    if(s>=e)return;
+    if(s>=e){
+        select2_sort(s, e);
+        return;
+    }
+    if(a[p1] > a[p2])swap(a[p1], a[p2]);
+    subpivot = a[p2];
+    while(true){
+       while(a[l]<=a[p1]&&l<=e-1){l++;}
+       while(a[r]>=a[p1]&&r>=s+1){
+           if(a[r]<a[p2]){R[er++] = r;}
+           else if(sr<er){//&&a[r-1]<a[p2]){
+               swap(a[R[sr++]], a[r]);
+               R[er++]=r;
+           }
+           r--;
+       }
+       if(l>=r)break; 
+       swap(a[l], a[r]);
+    }
+    if(er==0)pr = r+1;
+    else pr = R[sr]+1;
+    swap(a[p2], a[pr]);
+    swap(a[p1], a[r]);
+    quick_sort2(s, r-1);
+    quick_sort2(r+1, pr-1);   
+    quick_sort2(pr+1, e);
+}
+
+double my_sort2(int n)
+{
+   int time1, time2;
+   double tot_time;
+   time1 = clock();
+   quick_sort2(1, n);
+   time2 = clock();
+   tot_time = (double)(time2-time1)/CLOCKS_PER_SEC;
+   printf("mysort2: %lf\n", tot_time);
+   return tot_time;
+}
+
 double my_sort(int n) //New sort(Radix sort + Selection sort)
 {
     int k[(1<<K)],i,j,l,t,bit;
@@ -240,7 +299,7 @@ int main()
     double avg_heap = 0, avg_quick = 0, avg_select = 0, avg_bubble = 0, avg_std = 0, avg_insert = 0, avg_quick_mid = 0, avg_mine = 0; 
     FILE* F = fopen("data.txt", "w");
     for(i=1;i<=100000;i<10?i++:i<100?i+=10:i<1000?i+=100:i+=1000){
-        T = 1;
+        T = 10;
         n = 10*i;
         avg_heap = 0, avg_quick = 0, avg_select = 0, avg_bubble = 0, avg_std = 0, avg_insert = 0, avg_quick_mid = 0, avg_mine = 0;
         printf("n = %d\n\n", n);
@@ -253,9 +312,9 @@ int main()
             for(k=1;k<=n;k++)a[k]=r[k];
             //avg_quick_mid+=mid_quick_sort(n);
             for(k=1;k<=n;k++)a[k]=r[k];
-            avg_mine+=my_sort(n);
-            //for(k=1;k<=20;k++)printf("%d ", a[k]);
-            //printf("\n");
+            avg_mine+=my_sort2(n);
+            for(k=1;k<=20;k++)printf("%d ", a[k]);
+            printf("\n");
             for(k=1;k<=n;k++)a[k]=r[k];
             //avg_select+=select_sort(n);
             for(k=1;k<=n;k++)a[k]=r[k];
