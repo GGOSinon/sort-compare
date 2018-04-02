@@ -12,7 +12,7 @@ for line in F:
     #x += 1
     #print(line)
     x, y1, y2, y3 = line.split()
-    plot_x.append(int(x)*100)
+    plot_x.append(int(x))
     plot_y1.append(float(y1)*1000)
     plot_y2.append(float(y2)*1000)
     plot_y3.append(float(y3)*1000)

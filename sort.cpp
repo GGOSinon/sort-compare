@@ -239,7 +239,7 @@ int main()
     int T, n, i, j, k;
     double avg_heap = 0, avg_quick = 0, avg_select = 0, avg_bubble = 0, avg_std = 0, avg_insert = 0, avg_quick_mid = 0, avg_mine = 0; 
     FILE* F = fopen("data.txt", "w");
-    for(i=1;i<=1000;i<10?i++:i<100?i+=10:i<1000?i+=100:i+=1000){
+    for(i=1;i<=100000;i<10?i++:i<100?i+=10:i<1000?i+=100:i+=1000){
         T = 1;
         n = 10*i;
         avg_heap = 0, avg_quick = 0, avg_select = 0, avg_bubble = 0, avg_std = 0, avg_insert = 0, avg_quick_mid = 0, avg_mine = 0;
@@ -249,27 +249,27 @@ int main()
             for(k=1;k<=n;k++)a[k]=r[k];
             //avg_heap+=heap_sort(n);
             for(k=1;k<=n;k++)a[k]=r[k];
-            //avg_quick+=quick_sort(n);
+            avg_quick+=quick_sort(n);
             for(k=1;k<=n;k++)a[k]=r[k];
             //avg_quick_mid+=mid_quick_sort(n);
             for(k=1;k<=n;k++)a[k]=r[k];
-            //avg_mine+=my_sort(n);
+            avg_mine+=my_sort(n);
             //for(k=1;k<=20;k++)printf("%d ", a[k]);
             //printf("\n");
             for(k=1;k<=n;k++)a[k]=r[k];
-            avg_select+=select_sort(n);
+            //avg_select+=select_sort(n);
             for(k=1;k<=n;k++)a[k]=r[k];
-            avg_insert+=insert_sort(n);
+            //avg_insert+=insert_sort(n);
             for(k=1;k<=n;k++)a[k]=r[k];
-            avg_bubble+=bubble_sort(n);
+            //avg_bubble+=bubble_sort(n);
             for(k=1;k<=n;k++)a[k]=r[k];
-            //avg_std+=std_sort(n);
+            avg_std+=std_sort(n);
         }
         avg_heap /= T, avg_quick /= T, avg_select /= T, avg_bubble /= T, avg_std /= T;
         //fprintf(F, "%d %.3lf %.3lf %.3lf %.3lf %.3lf\n", n, avg_heap, avg_quick, avg_select, avg_bubble, avg_std);
         //fprintf(F, "%d %.3lf %.3lf %.3lf\n", n, avg_heap, avg_quick, avg_std);
-        //fprintf(F, "%d %.3lf %.3lf %.3lf\n", n, avg_std, avg_quick, avg_mine);
-        fprintf(F, "%d %.3lf %.3lf %.3lf\n", n, avg_select, avg_insert, avg_bubble);
+        fprintf(F, "%d %.3lf %.3lf %.3lf\n", n, avg_std, avg_quick, avg_mine);
+        //fprintf(F, "%d %.3lf %.3lf %.3lf\n", n, avg_select, avg_insert, avg_bubble);
     }
     fclose(F);
     return 0;
